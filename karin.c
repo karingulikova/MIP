@@ -58,9 +58,8 @@ int createListFromFile(PROPERTY **first, int val){
 }
 
 int printList(PROPERTY *first, int val) {
-            if (first == NULL) {
+    if (first == NULL) {
         return 1;
-
     }
     PROPERTY *current = first;
     int i;
@@ -74,8 +73,9 @@ int printList(PROPERTY *first, int val) {
         printf("cena: %d\n", current->price);
         printf("popis: %s", current->description);
 
-        if(current->next == NULL) break;
-
+        if(current->next == NULL){
+          break;
+        }
         current = current->next;
     }
     return 0;
@@ -102,23 +102,25 @@ void addProperty(PROPERTY **first, int *val){
     if(position == 1) {
         PROPERTY *newNode = malloc(sizeof(PROPERTY));
         newNode = temp;
-
         newNode->next = *first;
         *first = newNode;
     }
     else if(position > 1) {
         position = 0;
         for(i = 1; i < position; i++) {
-            if(current->next == NULL)
+            if(current->next == NULL){
                 break;
+            }
             current = current->next;
         }
         PROPERTY *newNode = malloc(sizeof(PROPERTY));
         newNode = temp;
-        if(current->next)
+        if(current->next){
             newNode->next = current->next;
-        else
+        }
+        else{
             newNode->next = NULL;
+        }
         current->next = newNode;
     }
     (*val)++;
@@ -127,8 +129,9 @@ void addProperty(PROPERTY **first, int *val){
 char *toLower(char *str) {
     int i;
     char *retStr = strdup(str);
-    for (i = 0 ; str[i]; ++i) retStr[i] = tolower(str[i]);
-
+    for (i = 0 ; str[i]; ++i){
+       retStr[i] = tolower(str[i]);
+    }
     return retStr;
 }
 
@@ -146,17 +149,12 @@ int deleteProperty(PROPERTY **first, int *val){
         changePrev = 1;
         if (strstr(toLower(current->city), delSubstr)) {
             if (prev && current->next) {
-
-
-                	prev->next = current->next;
-
-					changePrev = 0;
-
-                	(*val)--;
-                	delCounter++;
+              	prev->next = current->next;
+					      changePrev = 0;
+                (*val)--;
+                delCounter++;
             }
             else if (!prev && current->next) {
-
                 while (strstr(toLower(current->city), delSubstr)) {
                     if (current->next) {
                         *first = (*first)->next;
@@ -189,17 +187,17 @@ int deleteProperty(PROPERTY **first, int *val){
         if (changePrev) {
 	        prev = current;
 	        current = current->next;
-		}
-		else {
-			current = current->next;
-		}
+		     }
+		    else {
+			     current = current->next;
+		    }
     }
     printf("Vymazalo sa %d zaznamov\n", delCounter);
     return *val;
 }
 
 int addPropertyByCity(PROPERTY **first){
-        if (*first == NULL){
+    if (*first == NULL){
         return 1;
     }
     char searchCity[51];
@@ -210,12 +208,12 @@ int addPropertyByCity(PROPERTY **first){
     PROPERTY *new = NULL;
     new = malloc(sizeof(PROPERTY));
 
-            fgets(new->category, 51, stdin);
-            fgets(new->city, 51, stdin);
-            fgets(new->street, 101, stdin);
-            fscanf(stdin, "%d %d", &new->area, &new->price);
-            getc(stdin);
-            fgets(new->description, 201, stdin);
+    fgets(new->category, 51, stdin);
+    fgets(new->city, 51, stdin);
+    fgets(new->street, 101, stdin);
+    fscanf(stdin, "%d %d", &new->area, &new->price);
+    getc(stdin);
+    fgets(new->description, 201, stdin);
 
     PROPERTY *current = *first;
     char *searchCityPointer = toLower(searchCity);
@@ -223,25 +221,25 @@ int addPropertyByCity(PROPERTY **first){
     while(1){
     char *currentLocation = toLower(current->city);
 
-    if (strstr(currentLocation, searchCityPointer)){
+      if (strstr(currentLocation, searchCityPointer)){
 
-        strcpy(current->category, new->category);
-        strcpy(current->city, new->city);
-        strcpy(current->street, new->street);
-        current->area = new->area;
-        current->price = new->price;
-        strcpy(current->description, new->description);
+          strcpy(current->category, new->category);
+          strcpy(current->city, new->city);
+          strcpy(current->street, new->street);
+          current->area = new->area;
+          current->price = new->price;
+          strcpy(current->description, new->description);
 
-            editCount++;
-    }
-    if (current->next == NULL){
-        break;
-        }
+          editCount++;
+      }
+      if (current->next == NULL){
+          break;
+      }
     current = current->next;
-}
-        printf("Aktualizovalo sa %d zaznamov\n", editCount);
-        return 0;
     }
+    printf("Aktualizovalo sa %d zaznamov\n", editCount);
+    return 0;
+}
 
 
 int searchPropertyByPrice(PROPERTY **first){
@@ -265,15 +263,15 @@ int searchPropertyByPrice(PROPERTY **first){
         }
         current = current->next;
     }
-            if (current->price <= searchPrice) {
+        if (current->price <= searchPrice) {
             counter++;
 
             printf("%d.\nkategoria ponuky: %smiesto ponuky: %sulica: %srozloha v m2: %d\ncena: %d\npopis: %s", counter, current->category,
             current->city ,current->street, current->area, current->price, current->description);
         }
         if (counter == 0) {
-        printf("V ponuke su len reality s vyssou cenou\n");
-    }
+            printf("V ponuke su len reality s vyssou cenou\n");
+        }
     return 0;
 }
 
@@ -304,7 +302,7 @@ int main()
         if (input == 'a') {
             getc(stdin);
             addPropertyByCity(&first);
-            }
+        }
     }
     return 0;
 }
