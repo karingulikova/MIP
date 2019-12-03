@@ -13,6 +13,12 @@ typedef struct Property{
     struct Property *next;
 } PROPERTY;
 
+int headCheck(**first){
+  if (*first == NULL){
+      return 1;
+  }
+}
+
 int createListFromFile(PROPERTY **first, int val){
     *first = malloc(sizeof(PROPERTY));
     int count = 0;
@@ -58,9 +64,8 @@ int createListFromFile(PROPERTY **first, int val){
 }
 
 int printList(PROPERTY *first, int val) {
-    if (first == NULL) {
-        return 1;
-    }
+    headCheck(*first);
+
     PROPERTY *current = first;
     int i;
     for (i = 1; i <= val; i++) {
@@ -74,7 +79,7 @@ int printList(PROPERTY *first, int val) {
         printf("popis: %s", current->description);
 
         if(current->next == NULL){
-          break;
+            break;
         }
         current = current->next;
     }
@@ -197,9 +202,8 @@ int deleteProperty(PROPERTY **first, int *val){
 }
 
 int addPropertyByCity(PROPERTY **first){
-    if (*first == NULL){
-        return 1;
-    }
+    headCheck(*first);
+
     char searchCity[51];
     int editCount = 0;
 
@@ -243,9 +247,8 @@ int addPropertyByCity(PROPERTY **first){
 
 
 int searchPropertyByPrice(PROPERTY **first){
-    if (*first == NULL){
-        return 1;
-    }
+    headCheck(*first);
+
     int searchPrice = 0;
     int counter = 0;
 
