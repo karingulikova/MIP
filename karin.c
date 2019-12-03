@@ -13,6 +13,13 @@ typedef struct Property{
     struct Property *next;
 } PROPERTY;
 
+int headCheck(PROPERTY **first){
+  if (*first == NULL){
+      return 1;
+  }
+    return 0;
+}
+
 int createListFromFile(PROPERTY **first, int val){
     *first = malloc(sizeof(PROPERTY));
     int count = 0;
@@ -25,7 +32,7 @@ int createListFromFile(PROPERTY **first, int val){
         printf("Zaznamy neboli nacitane");
     }
     else{
-        while ((input = fgetc(file))! = EOF) {
+        while ((input = fgetc(file))!= EOF) {
             if (input == '&' || input == '$') {
                 val++;
             }
@@ -58,9 +65,8 @@ int createListFromFile(PROPERTY **first, int val){
 }
 
 int printList(PROPERTY *first, int val) {
-    if (first == NULL) {
-        return 1;
-    }
+    headCheck(&first);
+
     PROPERTY *current = first;
     int i;
     for (i = 1; i <= val; i++) {
@@ -74,7 +80,7 @@ int printList(PROPERTY *first, int val) {
         printf("popis: %s", current->description);
 
         if(current->next == NULL){
-          break;
+            break;
         }
         current = current->next;
     }
@@ -149,8 +155,8 @@ int deleteProperty(PROPERTY **first, int *val){
         changePrev = 1;
         if (strstr(toLower(current->city), delSubstr)) {
             if (prev && current->next) {
-              	prev->next = current->next;
-					      changePrev = 0;
+                  prev->next = current->next;
+                          changePrev = 0;
                 (*val)--;
                 delCounter++;
             }
@@ -185,21 +191,20 @@ int deleteProperty(PROPERTY **first, int *val){
             }
         }
         if (changePrev) {
-	        prev = current;
-	        current = current->next;
-		     }
-		    else {
-			     current = current->next;
-		    }
+            prev = current;
+            current = current->next;
+             }
+            else {
+                 current = current->next;
+            }
     }
     printf("Vymazalo sa %d zaznamov\n", delCounter);
     return *val;
 }
 
 int addPropertyByCity(PROPERTY **first){
-    if (*first == NULL){
-        return 1;
-    }
+    headCheck(&first);
+
     char searchCity[51];
     int editCount = 0;
 
@@ -243,9 +248,8 @@ int addPropertyByCity(PROPERTY **first){
 
 
 int searchPropertyByPrice(PROPERTY **first){
-    if (*first == NULL){
-        return 1;
-    }
+    headCheck(&first);
+
     int searchPrice = 0;
     int counter = 0;
 
