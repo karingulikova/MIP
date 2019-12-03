@@ -133,37 +133,6 @@ void p(PROPERTY **first, int *val){
     (*val)++;
 }
 
-/*void removeByIndex(PROPERTY **first, int *val){
-    int position=1,i=1;
-    PROPERTY *current=*first;
-    PROPERTY *retVal=NULL;
-    PROPERTY *temp=NULL;
-
-    if(*first==NULL) {
-        return;
-    }
-    if(position==1){
-        if(*first!=NULL){
-            temp=current->next;
-            retVal=current;
-            free(*first);
-            current=temp;
-        }
-    }
-    else if(position>1){
-        for (i=1;i<position-1;i++) {
-            if(current->next==NULL)
-                break;
-            current=current->next;
-        }
-        temp=current->next;
-        retVal=temp;
-        current->next=temp->next;
-        free(temp);
-    }
-    (*val)--;
-}
-*/
 char *toLower(char *str) {
     int i;
 
@@ -191,9 +160,7 @@ int z(PROPERTY **first, int *val){
         changePrev = 1;
         if (strstr(toLower(current->city), delSubstr)) {
             if (prev && current->next) {
-//            	printf("-1\n");
-                //okrem prveho a nie posledny
-//                while(prev && current->next) {
+
 
                 	prev->next = current->next;
 
@@ -201,11 +168,9 @@ int z(PROPERTY **first, int *val){
 
                 	(*val)--;
                 	delCounter++;
-//				}
             }
             else if (!prev && current->next) {
-//            	printf("-2\n");
-                // prvy zaznam, ale zaroven nie posledny
+
                 while (strstr(toLower(current->city), delSubstr)) {
                     if (current->next) {
                         *first = (*first)->next;
