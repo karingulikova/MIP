@@ -13,7 +13,7 @@ typedef struct Property{
     struct Property *next;
 } PROPERTY;
 
-int n(PROPERTY **first, int val){
+int createListFromFile(PROPERTY **first, int val){
     *first = malloc(sizeof(PROPERTY));
     int count = 0;
     char input;
@@ -62,7 +62,7 @@ int n(PROPERTY **first, int val){
     return val;
 }
 
-int v(PROPERTY *first, int val) {
+int printList(PROPERTY *first, int val) {
             if (first == NULL) {
 
         return 1;
@@ -88,7 +88,7 @@ int v(PROPERTY *first, int val) {
     return 0;
 }
 
-void p(PROPERTY **first, int *val){
+void addProperty(PROPERTY **first, int *val){
     int position, i = 1;
 
     scanf(" %d ", &position);
@@ -143,7 +143,7 @@ char *toLower(char *str) {
     return retStr;
 }
 
-int z(PROPERTY **first, int *val){
+int deleteProperty(PROPERTY **first, int *val){
     PROPERTY *current = *first;
     PROPERTY *prev = malloc(sizeof(PROPERTY));
     prev = NULL;
@@ -220,7 +220,7 @@ int z(PROPERTY **first, int *val){
 
 }
 
-int a(PROPERTY **first){
+int addPropertyByCity(PROPERTY **first){
         if (*first == NULL){
 
         return 1;
@@ -282,7 +282,7 @@ int a(PROPERTY **first){
     }
 
 
-int h(PROPERTY **first){
+int searchPropertyByPrice(PROPERTY **first){
 
 
     if (*first == NULL){
@@ -347,27 +347,27 @@ int main()
         scanf("%c", &input);
 
         if (input == 'n') {
-            val = n(&first, val);
+            val = createListFromFile(&first, val);
         }
         if (input == 'v') {
-            v(first, val);
+            printList(first, val);
         }
         if (input == 'p') {
-            p(&first, &val);
+            addProperty(&first, &val);
         }
         if (input == 'z') {
 
-            z(&first, &val);
+            deleteProperty(&first, &val);
 
         }
         if (input == 'h') {
-            h(&first);
+            searchPropertyByPrice(&first);
         }
         if (input == 'a') {
 
             getc(stdin);
 
-            a(&first);
+            addPropertyByCity(&first);
 
             }
 
