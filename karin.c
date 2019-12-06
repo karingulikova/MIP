@@ -3,6 +3,11 @@
 #include <ctype.h>
 #include <string.h>
 
+const int catMax=51;
+const int cityMax=51;
+const int strMax=101;
+const int desMax=201;
+
 typedef struct Property{
     char category[51];
     char city[51];
@@ -44,11 +49,11 @@ int createListFromFile(PROPERTY **first, int val){
             count++;
             current = malloc(sizeof(PROPERTY));
 
-            fgets(current->category, 51, file);
-            fgets(current->city, 51, file);
-            fgets(current->street, 101, file);
+            fgets(current->category, catMax, file);
+            fgets(current->city, cityMax, file);
+            fgets(current->street, strMax, file);
             fscanf(file,"%d %d ", &current->area, &current->price);
-            fgets(current->description, 201, file);
+            fgets(current->description, desMax, file);
 
             if (count != 1) {
                 last->next = current;
@@ -99,11 +104,11 @@ void addProperty(PROPERTY **first, int *val){
     PROPERTY *current = *first;
     struct Property *temp = malloc(sizeof(PROPERTY));
 
-    fgets(temp->category, 51, stdin);
-    fgets(temp->city, 51, stdin);
-    fgets(temp->street, 101, stdin);
+    fgets(temp->category, catMax, stdin);
+    fgets(temp->city, cityMax, stdin);
+    fgets(temp->street, strMax, stdin);
     scanf("%d %d ", &temp->area, &temp->price);
-    fgets(temp->description, 201, stdin);
+    fgets(temp->description, desMax, stdin);
 
     if(position == 1) {
         PROPERTY *newNode = malloc(sizeof(PROPERTY));
@@ -146,7 +151,7 @@ int deleteProperty(PROPERTY **first, int *val){
     PROPERTY *prev = malloc(sizeof(PROPERTY));
     prev = NULL;
     int delCounter = 0, changePrev =0;
-    char *delSubstr = calloc(53, sizeof(char));
+    char *delSubstr = calloc(cityMax, sizeof(char));
 
     scanf(" %[^\n]", delSubstr);
     delSubstr = toLower(delSubstr);
@@ -213,12 +218,12 @@ int addPropertyByCity(PROPERTY **first){
     PROPERTY *new = NULL;
     new = malloc(sizeof(PROPERTY));
 
-    fgets(new->category, 51, stdin);
-    fgets(new->city, 51, stdin);
-    fgets(new->street, 101, stdin);
+    fgets(new->category, catMax, stdin);
+    fgets(new->city, cityMax, stdin);
+    fgets(new->street, strMax, stdin);
     fscanf(stdin, "%d %d", &new->area, &new->price);
     getc(stdin);
-    fgets(new->description, 201, stdin);
+    fgets(new->description, desMax, stdin);
 
     PROPERTY *current = *first;
     char *searchCityPointer = toLower(searchCity);
@@ -297,7 +302,7 @@ int searchPropertyByPrice(PROPERTY **first){
             current->area,
             current->price,
             current->description);
-            
+
         }
         if (counter == 0) {
             printf("V ponuke su len reality s vyssou cenou\n");
