@@ -18,6 +18,7 @@ typedef struct Property{
     struct Property *next;
 } PROPERTY;
 
+//pomocna funkcia na kontrolu obsahu prveho zaznamu
 int headCheck(PROPERTY **first){
   if (*first == NULL){
       return 1;
@@ -25,6 +26,8 @@ int headCheck(PROPERTY **first){
     return 0;
 }
 
+//funkcia na vytvorenie spajaneho zoznamu struktur zo suboru
+//vstupuje do nej smernik na prvy zaznam a pocet zaznamov
 int createListFromFile(PROPERTY **first, int val){
     *first = malloc(sizeof(PROPERTY));
     int count = 0;
@@ -69,11 +72,14 @@ int createListFromFile(PROPERTY **first, int val){
     return val;
 }
 
+//funkcia na vypis celeho spajaneho zoznamu struktur
 int printList(PROPERTY *first, int val) {
     headCheck(&first);
 
     PROPERTY *current = first;
     int i;
+
+    //cyklus urceny na prechod celym zoznamom
     for (i = 1; i <= val; i++) {
         printf("%d. \n", i);
 
@@ -92,6 +98,8 @@ int printList(PROPERTY *first, int val) {
     return 0;
 }
 
+//funkcia, ktora sluzi na pridanie zaznamu na poziciu position zadanu pouzivatelom
+//zaznam sa prida na position+1 v spajanom zozname struktur
 void addProperty(PROPERTY **first, int *val){
     int position, i = 1;
 
@@ -110,12 +118,15 @@ void addProperty(PROPERTY **first, int *val){
     scanf("%d %d ", &temp->area, &temp->price);
     fgets(temp->description, desMax, stdin);
 
+    //pokial je pozicia jedna, pridavam na zaciatok
     if(position == 1) {
         PROPERTY *newNode = malloc(sizeof(PROPERTY));
         newNode = temp;
         newNode->next = *first;
         *first = newNode;
     }
+    //pokial je pozicia vacsia ako jedna, prechadzam zoznam
+    //zaznam pridam na zadanu poziciu
     else if(position > 1) {
         position = 0;
         for(i = 1; i < position; i++) {
@@ -137,6 +148,7 @@ void addProperty(PROPERTY **first, int *val){
     (*val)++;
 }
 
+//pomocna funkcia, ktora vsetky velke pismena v zadanom stringu zmeni na male
 char *toLower(char *str) {
     int i;
     char *retStr = strdup(str);
@@ -146,6 +158,8 @@ char *toLower(char *str) {
     return retStr;
 }
 
+//funkcia, ktora odstrani zaznamy na zaklade vzadaneho stupu delSubstr
+//funkcia porovna zaznam o mieste a pokial ho dana struktura obsahuje, vymaze ho
 int deleteProperty(PROPERTY **first, int *val){
     PROPERTY *current = *first;
     PROPERTY *prev = malloc(sizeof(PROPERTY));
