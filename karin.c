@@ -265,6 +265,20 @@ int addPropertyByCity(PROPERTY **first){
     return 0;
 }
 
+void printNode(PROPERTY current){
+  printf("kategoria ponuky: %s
+          miesto ponuky: %s
+          ulica: %s
+          rozloha v m2: %d\n
+          cena: %d\n
+          popis: %s",
+          current->category,
+          current->city,
+          current->street,
+          current->area,
+          current->price,
+          current->description);
+}
 
 int searchPropertyByPrice(PROPERTY **first){
     headCheck(&first);
@@ -280,43 +294,14 @@ int searchPropertyByPrice(PROPERTY **first){
     while (current->next != NULL) {
         if (current->price <= searchPrice) {
             counter++;
-
-            printf("%d.\n
-            kategoria ponuky: %s
-            miesto ponuky: %s
-            ulica: %s
-            rozloha v m2: %d\n
-            cena: %d\n
-            popis: %s",
-            counter,
-            current->category,
-            current->city,
-            current->street,
-            current->area,
-            current->price,
-            current->description);
+            printf("%d.\n",counter);
 
         }
         current = current->next;
     }
         if (current->price <= searchPrice) {
             counter++;
-
-            printf("%d.\n
-            kategoria ponuky: %
-            smiesto ponuky: %s
-            ulica: %s
-            rozloha v m2: %d\n
-            cena: %d\n
-            popis: %s",
-            counter,
-            current->category,
-            current->city,
-            current->street,
-            current->area,
-            current->price,
-            current->description);
-
+            printf("%d.\n",counter);
         }
         if (counter == 0) {
             printf("V ponuke su len reality s vyssou cenou\n");
