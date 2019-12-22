@@ -295,6 +295,7 @@ int searchPropertyByPrice(PROPERTY **first){
         if (current->price <= searchPrice) {
             counter++;
             printf("%d.\n",counter);
+            printNode(current);
 
         }
         current = current->next;
@@ -302,6 +303,7 @@ int searchPropertyByPrice(PROPERTY **first){
         if (current->price <= searchPrice) {
             counter++;
             printf("%d.\n",counter);
+            printNode(current);
         }
         if (counter == 0) {
             printf("V ponuke su len reality s vyssou cenou\n");
