@@ -305,28 +305,27 @@ int main()
     int val = 0;
     PROPERTY *first = NULL;
 
-    while (input != 'k') {
+    switch(input) {
         scanf("%c", &input);
 
-        if (input == 'n') {
-            val = createListFromFile(&first, val);
-        }
-        if (input == 'v') {
-            printList(first, val);
-        }
-        if (input == 'p') {
-            addProperty(&first, &val);
-        }
-        if (input == 'z') {
-            deleteProperty(&first, &val);
-        }
-        if (input == 'h') {
-            searchPropertyByPrice(&first);
-        }
-        if (input == 'a') {
-            getc(stdin);
-            addPropertyByCity(&first);
-        }
+        case n: val = createListFromFile(&first, val);
+        break;
+
+        case v: printList(first, val);
+        break;
+
+        case p: addProperty(&first, &val);
+        break;
+
+        case z: deleteProperty(&first, &val);
+        break;
+
+        case h: searchPropertyByPrice(&first);
+        break;
+
+        case a: getc(stdin);
+                addPropertyByCity(&first);
+        break;
     }
     return 0;
 }
