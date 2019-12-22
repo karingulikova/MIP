@@ -176,51 +176,51 @@ int deleteProperty(PROPERTY **first, int *val){
     delSubstr = toLower(delSubstr);
 
     while (current) {
-        changePrev = 1;
-        if (strstr(toLower(current->city), delSubstr)) {
-            if (prev && current->next) {
-                  prev->next = current->next;
-                          changePrev = 0;
-                (*val)--;
-                delCounter++;
+      changePrev = 1;
+      if (strstr(toLower(current->city), delSubstr)) {
+          if (prev && current->next) {
+            prev->next = current->next;
+            changePrev = 0;
+            (*val)--;
+            delCounter++;
+          }
+          else if (!prev && current->next) {
+            while (strstr(toLower(current->city), delSubstr)) {
+              if (current->next) {
+                  *first = (*first)->next;
+                  current = *first;
+              }
+              else {
+                  free(current);
+                  *first = NULL;
+                  (*val) = 0;
+                  break;
+              }
             }
-            else if (!prev && current->next) {
-                while (strstr(toLower(current->city), delSubstr)) {
-                    if (current->next) {
-                        *first = (*first)->next;
-                        current = *first;
-                    }
-                    else {
-                        free(current);
-                        *first = NULL;
-                        (*val) = 0;
-                        break;
-                    }
-                }
-                (*val)--;
-                delCounter++;
-            }
-            else if (!prev && !current->next) {
-                free(current);
-                *first = NULL;
-                (*val) = 0;
-                delCounter++;
-            }
-            else if (prev && !current->next) {
-                free(current);
-                current = prev->next = NULL;
-                (*val)--;
-                delCounter++;
-                break;
-            }
-        }
-        if (changePrev) {
-            prev = current;
-            current = current->next;
-             }
-            else {
-                 current = current->next;
-            }
+          (*val)--;
+          delCounter++;
+          }
+          else if (!prev && !current->next) {
+              free(current);
+              *first = NULL;
+              (*val) = 0;
+              delCounter++;
+          }
+          else if (prev && !current->next) {
+              free(current);
+              current = prev->next = NULL;
+              (*val)--;
+              delCounter++;
+              break;
+          }
+      }
+      if (changePrev) {
+          prev = current;
+          current = current->next;
+      }
+      else {
+          current = current->next;
+      }
     }
     printf("Vymazalo sa %d zaznamov\n", delCounter);
     return *val;
@@ -244,20 +244,19 @@ int addPropertyByCity(PROPERTY **first){
     while(1){
     char *currentLocation = toLower(current->city);
 
-      if (strstr(currentLocation, searchCityPointer)){
+    if (strstr(currentLocation, searchCityPointer)){
+        strcpy(current->category, new->category);
+        strcpy(current->city, new->city);
+        strcpy(current->street, new->street);
+        current->area = new->area;
+        current->price = new->price;
+        strcpy(current->description, new->description);
 
-          strcpy(current->category, new->category);
-          strcpy(current->city, new->city);
-          strcpy(current->street, new->street);
-          current->area = new->area;
-          current->price = new->price;
-          strcpy(current->description, new->description);
-
-          editCount++;
-      }
-      if (current->next == NULL){
-          break;
-      }
+        editCount++;
+    }
+    if (current->next == NULL){
+        break;
+    }
     current = current->next;
     }
     printf("Aktualizovalo sa %d zaznamov\n", editCount);
