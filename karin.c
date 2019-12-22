@@ -226,6 +226,8 @@ int deleteProperty(PROPERTY **first, int *val){
     return *val;
 }
 
+//funkcia ktora porovnava hladane mesto a mesta v zozname
+//pokial ho zoznam obsahuje, aktualizuje ho
 int addPropertyByCity(PROPERTY **first){
     headCheck(&first);
 
@@ -263,6 +265,7 @@ int addPropertyByCity(PROPERTY **first){
     return 0;
 }
 
+//funkcia ktora vyhladava zaznamy s cenou rovnou alebo mensou ako je hladana
 int searchPropertyByPrice(PROPERTY **first){
     headCheck(&first);
 
@@ -275,6 +278,7 @@ int searchPropertyByPrice(PROPERTY **first){
     current = *first;
 
     while (current->next != NULL) {
+        //porovnava zaznamy
         if (current->price <= searchPrice) {
             counter++;
             printf("%d.\n",counter);
@@ -283,6 +287,7 @@ int searchPropertyByPrice(PROPERTY **first){
         }
         current = current->next;
     }
+        //porovnava posledny zaznam
         if (current->price <= searchPrice) {
             counter++;
             printf("%d.\n",counter);
