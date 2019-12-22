@@ -82,14 +82,7 @@ int printList(PROPERTY *first, int val) {
     //cyklus urceny na prechod celym zoznamom
     for (i = 1; i <= val; i++) {
         printf("%d. \n", i);
-
-        printf("kategoria ponuky: %s", current->category);
-        printf("miesto ponuky: %s", current->city);
-        printf("ulica: %s", current->street);
-        printf("rozloha v m2: %d\n", current->area);
-        printf("cena: %d\n", current->price);
-        printf("popis: %s", current->description);
-
+        printNode(current);
         if(current->next == NULL){
             break;
         }
