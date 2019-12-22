@@ -25,6 +25,13 @@ int headCheck(PROPERTY **first){
   }
     return 0;
 }
+void loadNode(PROPERTY current){
+  fgets(current->category, catMax, file);
+  fgets(current->city, cityMax, file);
+  fgets(current->street, strMax, file);
+  fscanf(file,"%d %d ", &current->area, &current->price);
+  fgets(current->description, desMax, file);
+}
 
 //funkcia na vytvorenie spajaneho zoznamu struktur zo suboru
 //vstupuje do nej smernik na prvy zaznam a pocet zaznamov
@@ -51,12 +58,7 @@ int createListFromFile(PROPERTY **first, int val){
         while ((fscanf(file, "%c ", &input)) != EOF) {
             count++;
             current = malloc(sizeof(PROPERTY));
-
-            fgets(current->category, catMax, file);
-            fgets(current->city, cityMax, file);
-            fgets(current->street, strMax, file);
-            fscanf(file,"%d %d ", &current->area, &current->price);
-            fgets(current->description, desMax, file);
+            loadNode(current);
 
             if (count != 1) {
                 last->next = current;
@@ -70,6 +72,21 @@ int createListFromFile(PROPERTY **first, int val){
         printf("Nacitalo sa %d zaznamov\n", val);
     }
     return val;
+}
+//funkcia na vypis jedneho zaznamu
+void printNode(PROPERTY current){
+  printf("kategoria ponuky: %s
+          miesto ponuky: %s
+          ulica: %s
+          rozloha v m2: %d\n
+          cena: %d\n
+          popis: %s",
+          current->category,
+          current->city,
+          current->street,
+          current->area,
+          current->price,
+          current->description);
 }
 
 //funkcia na vypis celeho spajaneho zoznamu struktur
@@ -104,12 +121,7 @@ void addProperty(PROPERTY **first, int *val){
     }
     PROPERTY *current = *first;
     struct Property *temp = malloc(sizeof(PROPERTY));
-
-    fgets(temp->category, catMax, stdin);
-    fgets(temp->city, cityMax, stdin);
-    fgets(temp->street, strMax, stdin);
-    scanf("%d %d ", &temp->area, &temp->price);
-    fgets(temp->description, desMax, stdin);
+    loadNode(temp);
 
     //pokial je pozicia jedna, pridavam na zaciatok
     if(position == 1) {
@@ -224,13 +236,7 @@ int addPropertyByCity(PROPERTY **first){
 
     PROPERTY *new = NULL;
     new = malloc(sizeof(PROPERTY));
-
-    fgets(new->category, catMax, stdin);
-    fgets(new->city, cityMax, stdin);
-    fgets(new->street, strMax, stdin);
-    fscanf(stdin, "%d %d", &new->area, &new->price);
-    getc(stdin);
-    fgets(new->description, desMax, stdin);
+    loadNode(new);
 
     PROPERTY *current = *first;
     char *searchCityPointer = toLower(searchCity);
@@ -256,21 +262,6 @@ int addPropertyByCity(PROPERTY **first){
     }
     printf("Aktualizovalo sa %d zaznamov\n", editCount);
     return 0;
-}
-
-void printNode(PROPERTY current){
-  printf("kategoria ponuky: %s
-          miesto ponuky: %s
-          ulica: %s
-          rozloha v m2: %d\n
-          cena: %d\n
-          popis: %s",
-          current->category,
-          current->city,
-          current->street,
-          current->area,
-          current->price,
-          current->description);
 }
 
 int searchPropertyByPrice(PROPERTY **first){
